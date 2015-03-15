@@ -112,6 +112,9 @@ class ChampionGG {
 			$itemIDs = array();
 			foreach ($array["items"] as $item) {
 				$id = $item["id"];
+				if ($id == 2010) {
+					$id = 2003;
+				}
 				if (isset($itemIDs[$id])) {
 					$itemIDs[$id]++;
 				}
