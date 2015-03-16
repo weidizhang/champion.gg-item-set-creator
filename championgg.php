@@ -20,7 +20,9 @@ class ChampionGG {
 		$url = "http://champion.gg/champion/" . $champ . "/" . $role;
 
 		$page = $this->getPage($url);
-		$data = $this->getBetween($page, "matchupData.championData = ", ";");
+		$data = $this->getBetween($page, "matchupData.championData = ", "matchupData.patchHistory");
+		$data = trim($data);
+		$data = trim($data, ";");
 		$champJSON = json_decode($data, true);
 		$currentPatch = $this->getBetween($page, "<small>Patch <strong>", "</strong>");				
 
@@ -154,6 +156,6 @@ class ChampionGG {
 }
 
 $champ = new ChampionGG();
-//$champ->getOneSet("Zed", "Middle");
+//$champ->getOneSet("Bard", "Support");
 $champ->getAllSets();
 ?>
