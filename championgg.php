@@ -45,19 +45,19 @@ class ChampionGG {
 
         $firstMGBlock = array(
             "items" => array_merge($this->getItems($firstMG), $this->getItems($trinketItems, true)),
-            "type" => "Most Frequent Starters (" . $firstMG["winPercent"] . "% wins over " . $firstMG["games"] . " games)"
+            "type" => "Most Frequent Starters, First 5 skills: ".$this->getFirstFiveSkills($skillOrder[0])
         );
         $firstHWPBlock = array(
             "items" => array_merge($this->getItems($firstHWP), $this->getItems($trinketItems, true)),
-            "type" => "Highest Win Rate Starters (" . $firstHWP["winPercent"] . "% wins over " . $firstHWP["games"] . " games)"
+            "type" => "Highest Win Rate Starters, First 5 skills: ".$this->getFirstFiveSkills($skillOrder[1])
         );
         $fullMGBlock = array(
             "items" => $this->getItems($fullMG),
-            "type" => "Most Frequent Build, Skill order: ".$this->getSkillsShortened($skillOrder[0]) ." (" . $fullMG["winPercent"] . "% wins over " . $fullMG["games"] . " games)"
+            "type" => "Most Frequent Build, Skill order: ".$this->getSkillsShortened($skillOrder[0])
         );
         $fullHWPBlock = array(
             "items" => $this->getItems($fullHWP),
-            "type" => "Highest Win Rate Build, Skill order: ".$this->getSkillsShortened($skillOrder[1]) ." (" . $fullHWP["winPercent"] . "% wins over " . $fullHWP["games"] . " games)"
+            "type" => "Highest Win Rate Build, Skill order: ".$this->getSkillsShortened($skillOrder[1])
         );
         $consumeBlock = array(
             "items" => $this->getItems($consumeItems, true),
@@ -189,6 +189,16 @@ class ChampionGG {
         return substr($shortSkillOrder,0,-1);
     }
 
+    private function getFirstFiveSkills($skillArray) {
+        $skillString = '';
+
+        for ($i = 1; $i <= 5; $i++) {
+            $skillString .= $skillArray[$i] . '>';
+        }
+        echo $skillString;
+        return substr($skillString,0,-1);
+    }
+
     private function getBetween($content, $start, $end){
         $r = explode($start, $content);
         if (isset($r[1])) {
@@ -210,6 +220,6 @@ class ChampionGG {
 }
 
 $champ = new ChampionGG();
-//$champ->getOneSet("Nunu", "Jungle");
+//$champ->getOneSet("Olaf", "Jungle");
 $champ->getAllSets();
 ?>
