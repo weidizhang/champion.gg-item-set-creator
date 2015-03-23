@@ -31,6 +31,9 @@ class ChampionGG {
 		$fullMG = $champJSON["items"]["mostGames"];
 		$fullHWP = $champJSON["items"]["highestWinPercent"];
 
+		$skillsMG = $champJSON["skills"]["mostGames"];
+		$skillsHWP = $champJSON["skills"]["highestWinPercent"];
+
 		if (!isset($firstMG["games"], $firstHWP["games"], $fullMG["games"], $fullHWP["games"])) {
 			echo "Woops, full data is unavailable for " . $champ . " in " . $role . " role\n";
 			return false;
@@ -39,25 +42,36 @@ class ChampionGG {
 		$consumeItems = array(2003, 2004, 2044, 2043, 2041, 2138, 2137, 2139, 2140);
 		$trinketItems = array(3340, 3341, 3342);
 
+		$skillsItems1 = array(3361, 3362, 2003 /* health pot needed here so it works in other maps */);
+		$skillsItems2 = array(3364, 3363, 2003);
+
 		$firstMGBlock = array(
 			"items" => array_merge($this->getItems($firstMG), $this->getItems($trinketItems, true)),
-			"type" => "Most Frequent Starters (" . $firstMG["winPercent"] . "% wins over " . $firstMG["games"] . " games)"
+			"type" => "Most Frequent Starters (" . $firstMG["winPercent"] . "% win - " . $firstMG["games"] . " games)"
 		);
 		$firstHWPBlock = array(
 			"items" => array_merge($this->getItems($firstHWP), $this->getItems($trinketItems, true)),
-			"type" => "Highest Win Rate Starters (" . $firstHWP["winPercent"] . "% wins over " . $firstHWP["games"] . " games)"
+			"type" => "Highest Win Rate Starters (" . $firstHWP["winPercent"] . "% win - " . $firstHWP["games"] . " games)"
 		);
 		$fullMGBlock = array(
 			"items" => $this->getItems($fullMG),
-			"type" => "Most Frequent Build (" . $fullMG["winPercent"] . "% wins over " . $fullMG["games"] . " games)"
+			"type" => "Most Frequent Build (" . $fullMG["winPercent"] . "% win - " . $fullMG["games"] . " games)"
 		);
 		$fullHWPBlock = array(
 			"items" => $this->getItems($fullHWP),
-			"type" => "Highest Win Rate Build (" . $fullHWP["winPercent"] . "% wins over " . $fullHWP["games"] . " games)"
+			"type" => "Highest Win Rate Build (" . $fullHWP["winPercent"] . "% win - " . $fullHWP["games"] . " games)"
 		);
 		$consumeBlock = array(
 			"items" => $this->getItems($consumeItems, true),
 			"type" => "Consumables"
+		);
+		$skillsMGBlock = array(
+			"items" => $this->getItems($skillsItems1, true),
+			"type" => $this->getSkills($skillsMG) . " (" . $skillsMG["winPercent"] . "% win - " . $skillsMG["games"] . " games)"
+		);
+		$skillsHWPBlock = array(
+			"items" => $this->getItems($skillsItems2, true),
+			"type" => $this->getSkills($skillsHWP) . " (" . $skillsHWP["winPercent"] . "% win - " . $skillsHWP["games"] . " games)"
 		);
 
 		$roleFormatted = substr($champJSON["role"], 0, 1) . substr(strtolower($champJSON["role"]), 1);
@@ -69,7 +83,9 @@ class ChampionGG {
 				$firstHWPBlock,
 				$fullMGBlock,
 				$fullHWPBlock,
-				$consumeBlock
+				$consumeBlock,
+				$skillsMGBlock,
+				$skillsHWPBlock
 			),
 			"associatedChampions" => array(),
 			"title" => $roleFormatted . " " . $currentPatch,
@@ -98,6 +114,23 @@ class ChampionGG {
 		file_put_contents($fileName, $itemSetJSON);
 		echo "Saved set for " . $champ . " in " . $role . " role to: " . $fileName . "\n";
 		return true;
+	}
+
+	private function getSkills($array) {
+		$skillStr = "";
+
+		foreach ($array["order"] as $index => $skill) {
+			//$level = $index + 1;
+			$skill = strtr($skill, array(
+				"1" => "Q",
+				"2" => "W",
+				"3" => "E",
+				"4" => "R"
+			));
+
+			$skillStr .= $skill;			
+		}
+		return $skillStr;
 	}
 
 	private function getItems($array, $fromPreset = false) {
