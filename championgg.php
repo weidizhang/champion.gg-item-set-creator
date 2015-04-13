@@ -134,6 +134,8 @@ class ChampionGG {
 			unset($itemSetArr["blocks"][3]);
 		}
 		
+		$itemSetArr["blocks"] = array_values($itemSetArr["blocks"]);
+		
 		if ($saveFolder == null) {
 			$saveFolder = $champJSON["key"] . "/Recommended";
 		}
