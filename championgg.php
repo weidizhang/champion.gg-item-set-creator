@@ -158,7 +158,7 @@ class ChampionGG {
 		$skillStr = "";
 
 		foreach ($array["order"] as $index => $skill) {
-			//$level = $index + 1;
+			$level = $index + 1;
 			$skill = strtr($skill, array(
 				"1" => "Q",
 				"2" => "W",
@@ -166,6 +166,10 @@ class ChampionGG {
 				"4" => "R"
 			));
 
+			if ($level == 6 || $level == 12) {
+				$skill .= " > ";
+			}
+			
 			$skillStr .= $skill;			
 		}
 		return $skillStr;
