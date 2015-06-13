@@ -32,7 +32,7 @@ class ChampionGG {
 		$data = trim($data);
 		$data = trim($data, ";");
 		$champJSON = json_decode($data, true);
-		$currentPatch = $this->getBetween($page, "<small>Patch <strong>", "</strong>");				
+		$currentPatch = $this->getBetween(str_replace(array("\n", " "), "", $page), "<small>Patch<strong>", "</strong>");
 
 		$firstMG = $champJSON["firstItems"]["mostGames"];
 		$firstHWP = $champJSON["firstItems"]["highestWinPercent"];
