@@ -5,7 +5,7 @@ class ChampionGG {
 								"Shyvana", "Tryndamere", "Yasuo");
 	
 	public function getAllSets() {
-		echo "Creating item sets for all champions...\n";
+		echo "Creating item sets for all champions...<br>";
 		$time = time();
 		$saveFolder = $time . "_ItemSets";
 		$page = $this->getPage("http://champion.gg/");
@@ -150,7 +150,7 @@ class ChampionGG {
 		$fileName = $saveFolder . "/" . $fileName;
 		$itemSetJSON = json_encode($itemSetArr, JSON_PRETTY_PRINT);
 		file_put_contents($fileName, $itemSetJSON);
-		echo "Saved set for " . $champ . " in " . $role . " role to: " . $fileName . "\n";
+		echo "Saved set for " . $champ . " in " . $role . " role to: " . $fileName . "<br>";
 		return true;
 	}
 
@@ -231,6 +231,5 @@ class ChampionGG {
 }
 
 $champ = new ChampionGG();
-//$champ->getOneSet("Bard", "Support");
 $champ->getAllSets();
 ?>
