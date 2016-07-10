@@ -96,6 +96,13 @@ class ChampionGG {
 		);
 
 		$roleFormatted = substr($champJSON["role"], 0, 1) . substr(strtolower($champJSON["role"]), 1);
+		if ($roleFormatted == "Duo_carry") {
+			$roleFormatted = "ADC";
+		}
+		else if ($roleFormatted == "Duo_support") {
+			$roleFormatted = "Support";
+		}
+		
 		$itemSetArr = array(
 			"map" => "any",
 			"isGlobalForChampions" => false,
