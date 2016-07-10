@@ -48,16 +48,14 @@ class ChampionGG {
 			return false;
 		}		
 
-		$consumeItems = array(2003, 2004, 2044, 2043, 2041, 2138, 2137, 2139, 2140);
+		$consumeItems = array(2003, 2031, 2033, 2032, 2043, 2138, 2139, 2140);
 		$trinketItems = array(3340, 3341, 3342);
 		
 		if (in_array($champ, $this->manaless)) {
 			unset($consumeItems[1]);
 		}
-
-		$skillsItems1 = array(3361, 3362, 2003 /* health pot needed here so it works in other maps */);
-		$skillsItems2 = array(3364, 3363, 2003);
-		$skillsItemsComb = array(3361, 3362, 3364, 3363, 2003);
+		
+		$skillsItems = array(3364, 3363, 2003);
 
 		$firstMGItems = array_merge($this->getItems($firstMG), $this->getItems($trinketItems, true));
 		$firstHWPItems = array_merge($this->getItems($firstHWP), $this->getItems($trinketItems, true));
@@ -89,11 +87,11 @@ class ChampionGG {
 		$skillsHWPOrder = $this->getSkills($skillsHWP);
 		
 		$skillsMGBlock = array(
-			"items" => $this->getItems($skillsItems1, true),
+			"items" => $this->getItems($skillsItems, true),
 			"type" => $skillsMGOrder . " (" . $skillsMG["winPercent"] . "% win - " . $skillsMG["games"] . " games)"
 		);
 		$skillsHWPBlock = array(
-			"items" => $this->getItems($skillsItems2, true),
+			"items" => $this->getItems($skillsItems, true),
 			"type" => $skillsHWPOrder . " (" . $skillsHWP["winPercent"] . "% win - " . $skillsHWP["games"] . " games)"
 		);
 
@@ -123,7 +121,6 @@ class ChampionGG {
 		
 		if ($skillsMGOrder == $skillsHWPOrder) {
 			array_pop($itemSetArr["blocks"]);
-			$itemSetArr["blocks"][5]["items"] = $this->getItems($skillsItemsComb, true);
 		}
 
 		if ($firstMGItems == $firstHWPItems) {
@@ -189,7 +186,7 @@ class ChampionGG {
 			$itemIDs = array();
 			foreach ($array["items"] as $item) {
 				$id = $item["id"];
-				if ($id == 2010) {
+				if ($id == 2009 || $id == 2010) {
 					$id = 2003;
 				}
 				if (isset($itemIDs[$id])) {
