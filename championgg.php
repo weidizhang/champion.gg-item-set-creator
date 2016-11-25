@@ -1,9 +1,5 @@
 <?php
 class ChampionGG {
-	private $manaless = array("Aatrox", "DrMundo", "Mordekaiser", "Vladimir", "Zac", "Akali", "Kennen", "LeeSin", "Shen",
-								"Zed", "Garen", "Gnar", "Katarina", "RekSai", "Renekton", "Rengar", "Riven", "Rumble",
-								"Shyvana", "Tryndamere", "Yasuo");
-	
 	public function getAllSets() {
 		echo "Creating item sets for all champions...\n";
 		$time = time();
@@ -50,10 +46,6 @@ class ChampionGG {
 
 		$consumeItems = array(2003, 2031, 2033, 2032, 2043, 2138, 2139, 2140);
 		$trinketItems = array(3340, 3341, 3342);
-		
-		if (in_array($champ, $this->manaless)) {
-			unset($consumeItems[1]);
-		}
 		
 		$skillsItems = array(3364, 3363, 2003);
 
