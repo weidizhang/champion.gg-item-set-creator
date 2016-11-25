@@ -44,7 +44,7 @@ class ChampionGG {
 			return false;
 		}		
 
-		$consumeItems = array(2003, 2031, 2033, 2032, 2043, 2138, 2139, 2140);
+		$consumeItems = array(2003, 2031, 2033, 2032, 2055, 2138, 2139, 2140);
 		$trinketItems = array(3340, 3341, 3342);
 		
 		$skillsItems = array(3364, 3363, 2003);
